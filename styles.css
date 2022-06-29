@@ -1,0 +1,10 @@
+.H{
+    text-align: center;
+}
+.SelectType{
+    text-align: center;
+    background-color: black;
+    color: white;
+    width: 33%;
+    /* margin-left: 66%; */
+}

@@ -1,0 +1,1287 @@
+<!DOCTYPE html>
+<!-- Made by h0gs from Github -->
+<link rel="stylesheet" href="styles.css">
+<!-- <h1 class="H">Hallo</h1> -->
+<div id="Parent">
+
+    <div id="ClassType" class="SelectType" onmouseenter="Enter()" onmouseleave="Exit()">
+        <h1 onclick="Xh1()">h1</h1>
+        <h2 onclick="Xh2()">h2</h2>
+        <h3 onclick="Xh3()">h3</h3>
+        <h4 onclick="Xh4()">h4</h4>
+        <h5 onclick="Xh5()">h5</h5>
+        <h6 onclick="Xh6()">h6</h6>
+        <p onclick="Xp()">Paragraph</p>
+        <a onclick="Xa()" id="Link">Link</a>
+        <h6></h6>
+        <img alt="Get HTML" id="HTML" class="HTML" src="https://user-images.githubusercontent.com/95542282/173885310-9e4aa80f-5653-4e1c-a0fb-0ffd746838e2.png" style="height: 50px;" style="width: 50px;" onclick="GetHTML()">
+        <img alt="Delete" id="Delete" class="Delete" onclick="Delete()" src="https://user-images.githubusercontent.com/95542282/166702146-cd04cd4b-724b-4897-99d6-6cdd5c6b8ce4.png" style="height: 50px;" style="width: 50px;">
+        <img onclick="Photo()" style="height: 50px;" style="width: 50px;" id="Photowo" class="Photowo" src="https://user-images.githubusercontent.com/95542282/166702644-64249568-41de-4673-a6d2-9f00096dc33c.png" alt="Photo">
+        <img src="https://user-images.githubusercontent.com/95542282/166713864-35bb3c99-6746-4755-8f36-913a24ec8ad0.png" alt="Change Color" style="height: 50px;" style="width: 50px;" class="ChangeColor" id="ChangeColor" onclick="ChangeColors()">
+        <img alt="Re-Size" id="Resize" src="https://user-images.githubusercontent.com/95542282/170051978-eefbfcf8-8a22-4f99-b889-b4660f9c1653.png" class="Resize" style="height: 50px" style="width: 50px" onclick="Resize()">
+        <img alt="Mover" id="Mover" class="Mover" style="height: 50px;" style="width: 50px;" src="https://user-images.githubusercontent.com/95542282/173124238-90aea306-a7e5-4c4c-971c-39ce03bfc49e.png" onclick="Move()">
+        <img src="https://user-images.githubusercontent.com/95542282/176516224-021cc8a3-f16d-495c-98e8-29dd334c00b2.png" alt="Change Text" style="width: 50px;" id="Text" class="Text" onclick="ChangeText()">
+        <h6></h6>
+        <!-- <h6></h6>
+        <textarea>Hi</textarea> -->
+        <!-- "https://user-images.githubusercontent.com/95542282/169532192-872f17c2-8629-4575-98c3-70bb9a6c769b.png" -->
+        <!-- "https://user-images.githubusercontent.com/95542282/169532339-aa0fdbb4-1d46-4ad9-8035-be647e98c464.png" -->
+    </div>
+    <div id="Workspace" class="Workspace">
+        <h4>This is the Workspace</h4>
+    </div>
+</div>
+
+<div id="RGB">
+    <!-- <h1>Hi</h1> -->
+</div>
+<div id="ResizeChunk">
+    <!-- Hi -->
+</div>
+<script>
+    const width = window.innerWidth;
+    const height = window.innerHeight;
+    var IDS = 0;
+    var elements = [];
+    var Deleting = false;
+    var ColorChange = false;
+    var ChangingColors = false;
+    var Workspace = document.getElementById("Workspace");
+    var Selecter = document.getElementById("ClassType");
+    Selecter.style.position = 'absolute';
+    Selecter.style.left = String(width*0.7)+"px";
+    Selecter.style.top = "0px";
+    document.getElementById("Parent").appendChild(Selecter);
+    // var QRS = prompt("Hallo");
+    var Placeable = true;
+    document.onclick = (event) => {
+        if(Placeable == true){
+            if(SelectedElement == ""){
+                //Does nothing
+            }else{
+                // console.log("Moved!")
+                // console.log("DOne")
+                const x = (event.clientX);
+                const y = (event.clientY);
+                // const y = (event.clientY * 100) / window.innerHeight + '%';
+                let element = document.createElement(SelectedElement);
+                element.type = SelectedElement;
+                element.D = false;
+                if(SelectedElement != "img"){
+                    element.D = false;
+                    element.text = prompt("Enter text!");
+                    element.innerHTML = element.text;
+                    element.style.color = "rgba(0,0,0,1)";
+                    element.c = element.style.color;
+                    element.b = element.style.backgroundColor;
+                    console.log("B: "+element.b);
+                    element.transparency = 1;
+                    element.id = IDS;
+                    IDS = IDS + 1;
+                    console.log("Elemtn innitially is:"+element);
+                    
+                }else{
+                    element.D = false;
+                    element.src = prompt("Enter url for image!");
+                    element.w = '50px'; //prompt("Enter width for image!");
+                    element.style.width = element.w;
+                    element.h = "50px"; //prompt("Enter height for image");
+                    element.style.height = element.h;
+                    PhotoOn = false;
+                    Photowo.src = "https://user-images.githubusercontent.com/95542282/166702644-64249568-41de-4673-a6d2-9f00096dc33c.png";
+                    SelectedElement = "";
+                }
+                element.style.position = 'absolute';
+                element.style.left = String(x)+"px";
+                element.style.top = String(y)+"px";
+                document.getElementById("Workspace").appendChild(element);
+                SelectedElement = "";
+                element.xPos = x;
+                element.yPos = y;
+                element.addEventListener("click", RuhRoh);
+                function RuhRoh(){
+                    console.log("Hello again!");
+                    if(Deleting == true){
+                        Deleting = false;
+                        document.getElementById("Delete").src="https://user-images.githubusercontent.com/95542282/166702146-cd04cd4b-724b-4897-99d6-6cdd5c6b8ce4.png"
+                        // elements[element.id] = "";
+                        element.D = true;
+                        Workspace.removeChild(element);
+                    }else{
+                        // <img src="https://pixabay.com/get/g1c4e7c15300f3b9d907f985c5ae4057b6fa78c8b1e934eac1a7dadb11eb58302837ccdc7db66f21581cd20670ce39a98755bb7740c6abd5ad55a6a59a7923aa1_640.png" style="width: 49.4141%; height: 271px; position: absolute; left: 20px; top: 146px;">        
+                        if(ColorChange == true){
+                            if(ChangingColors == false){
+                                ChangingColors = true;
+                                // console.log("DOing stuff");
+                                var RGBColorPicker = document.createElement("h3");
+                                // RGBColorPicker.innerHTML = "RGB Color Picker";
+                                RGBColorPicker.style.position = 'absolute';
+                                RGBColorPicker.style.top = height/1.75+"px";
+                                RGBColorPicker.style.left = width/1.25+"px";
+                                RGBColorPicker.innerHTML = '<span style="color: red;">'+"R"+'</span>'+'<span style="color: green;">'+"G"+'</span>'+'<span style="color: blue;">'+"B"+'</span>'+" color picker";
+                                document.getElementById("RGB").appendChild(RGBColorPicker)   
+
+                                var COBC /*Color or Background color*/ = document.createElement("img");
+                                COBC.src = "https://user-images.githubusercontent.com/95542282/169532192-872f17c2-8629-4575-98c3-70bb9a6c769b.png";
+                                COBC.style.position = "absolute";
+                                COBC.style.left = width/1.7+"px";
+                                COBC.style.top = height/1.3+"px";
+                                COBC.style.height = height/10+"px";
+                                COBC.style.width = height/10+"px";
+                                var ColorType = 0; //0 = color, 1 = background color. 
+                                COBC.addEventListener("click",function(){
+                                    //Bacground color
+                                    if(ColorType == 0){
+                                        ColorType = 1;
+                                        COBC.src = "https://user-images.githubusercontent.com/95542282/169532339-aa0fdbb4-1d46-4ad9-8035-be647e98c464.png";
+                                        RGB.appendChild(COBC);
+
+
+                                        col = element.b;
+
+                                        ABCD = String(element.b);
+                                        if(ABCD == ""){
+                                            console.log("Sucess!");
+                                            element.b = "rgba(0,0,0,0)"
+                                        }
+
+
+                                        //If element.b is in rgb format, put it into rgba. 
+                                        console.log("B: "+element.b);
+                                        col = col.replace("rgb","");
+                                        col = col.replace("(","");
+                                        col = col.replace(")","");
+                                        col = col.split(",");
+                                        if(col.length == 3){
+                                            col = "rgba("+col[0]+","+col[1]+","+col[2]+", 1)";
+                                            element.b = col;
+                                        }
+
+                                        col2 = element.b.replace("rgba(","");
+                                        col2 = col2.replace(")","");
+                                        // console.log("Col2: "+col2);
+                                        col2 = col2.replace(" ","")
+                                        colX = col2.split(",")
+                                        X = parseInt(colX[0])
+                                        R_display.innerHTML = X;
+                                        R_display.style.color = "rgb("+String(X)+", 0, 0)";
+                                        R_slider.style.left = width/1.25+((width/10/255)*X)+"px";
+                                        // console.log("ColX[0] = "+colX[0]);
+                                        BX = parseInt(colX[1]);
+                                        B_display.innerHTML = BX;
+                                        B_display.style.color = "rgb(0, "+String(BX)+", 0)";
+                                        B_slider.style.left = width/1.25+((width/10/255)*BX)+"px";
+                                        GX = parseInt(colX[2]);
+                                        G_display.innerHTML = GX;
+                                        G_display.style.color = "rgb(0, 0, "+String(GX)+")";
+                                        G_slider.style.left = width/1.25+((width/10/255)*GX)+"px";
+                                        // console.log("TX!: "+(colX[3]+000));
+                                        TX = parseInt(colX[3].replace(".","0"));
+                                        T_display.innerHTML = TX;
+                                        // console.log(String(TX).length);
+                                        if(TX > 1){TX = TX/(Math.pow(10,(String(TX).length)))};
+                                        T_slider.style.top = height/1.5/*The style.top for T_backing*/+(width/10)-((width/10)*(TX))+"px";
+                                    }else{
+                                        //Text color. 
+                                        ColorType = 0;
+                                        COBC.src = "https://user-images.githubusercontent.com/95542282/169532192-872f17c2-8629-4575-98c3-70bb9a6c769b.png";
+                                        RGB.appendChild(COBC);
+                                        col = element.c;
+                                        //If element.c is in rgb format, put it into rgba. 
+                                        console.log("C: "+element.c);
+                                        col = col.replace("rgb","");
+                                        col = col.replace("(","");
+                                        col = col.replace(")","");
+                                        col = col.split(",");
+                                        if(col.length == 3){
+                                            col = "rgba("+col[0]+","+col[1]+","+col[2]+", 1)";
+                                            element.c = col;
+                                        }
+
+                                        col2 = element.c.replace("rgba(","");
+                                        // 0
+                                        col2 = col2.replace(")","");
+                                        // console.log("Col2: "+col2);
+                                        col2 = col2.replace(" ","")
+                                        colX = col2.split(",")
+                                        X = parseInt(colX[0]);
+                                        R_slider.style.left = width/1.25+((width/10/255)*X)+"px";
+                                        R_display.innerHTML = X;
+                                        R_display.style.color = "rgb("+String(X)+", 0, 0)";
+                                        // console.log("ColX[0] = "+colX[0]);
+                                        BX = parseInt(colX[1]);
+                                        B_slider.style.left = width/1.25+((width/10/255)*BX)+"px";
+                                        B_display.innerHTML = BX;
+                                        B_display.style.color = "rgb(0, "+String(BX)+", 0)";
+                                        GX = parseInt(colX[2]);
+                                        G_display.innerHTML = GX;
+                                        G_display.style.color = "rgb(0, 0, "+String(GX)+")";
+                                        G_slider.style.left = width/1.25+((width/10/255)*GX)+"px";
+                                        console.log("TX!: "+(colX[3]+000));
+                                        TX = parseInt(colX[3].replace(".","0"));
+                                        T_display.innerHTML = TX;
+                                        console.log(String(TX).length);
+                                        if(TX > 1){TX = TX/(Math.pow(10,(String(TX).length)))};
+                                        T_slider.style.top = height/1.5/*The style.top for T_backing*/+(width/10)-((width/10)*(TX))+"px";
+                                    }
+                                })
+                                RGB.appendChild(COBC);
+
+                                col = element.c;
+                                //If element.c is in rgb format, put it into rgba. 
+                                console.log("C: "+element.c);
+                                col = col.replace("rgb","");
+                                col = col.replace("(","");
+                                col = col.replace(")","");
+                                col = col.split(",");
+                                if(col.length == 3){
+                                    col = "rgba("+col[0]+","+col[1]+","+col[2]+", 1)";
+                                    element.c = col;
+                                }
+
+                                col2 = element.c.replace("rgba(","");
+                                // 0
+                                col2 = col2.replace(")","");
+                                // console.log("Col2: "+col2);
+                                col2 = col2.replace(" ","")
+                                colX = col2.split(",")
+                                X = parseInt(colX[0])
+                                // console.log("ColX[0] = "+colX[0]);
+                                BX = parseInt(colX[1]);
+                                GX = parseInt(colX[2]);
+                                console.log("TX!: "+(colX[3]+000));
+                                TX = parseInt(colX[3].replace(".","0"));
+                                console.log(String(TX).length);
+                                if(TX > 1){TX = TX/(Math.pow(10,(String(TX).length)))};
+                                // console.log("ZOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOM"+Math.pow(2,3))
+                                // console.log("TX@: "+TX);
+
+                                //Red------------------------------------------
+                                var R_backing = document.createElement("img")
+                                R_backing.src = "https://user-images.githubusercontent.com/95542282/167852656-d1d35ee7-ea5f-4ef6-9491-a838541c7f30.png"
+                                R_backing.style.position = 'absolute';
+                                R_backing.style.left = width/1.25+"px";
+                                R_backing.style.top = height/1.5+"px";
+                                R_backing.height = width/40;
+                                R_backing.width = width/10;
+                                // console.log("X is: "+parseInt(X));
+                                R_display = document.createElement("h3");
+                                R_display.style.position = 'absolute';
+                                R_display.style.left = width/1.25+"px";
+                                R_display.style.top = height/1.65+"px";
+                                document.getElementById("RGB").appendChild(R_display);
+
+                                document.getElementById("RGB").appendChild(R_backing);
+                                R_backing.style.left = width/1.25+"px";
+                                R_backing.style.top = height/1.5+"px";
+
+                                var R_slider = document.createElement("img");
+                                R_slider.width = width/80;
+                                R_slider.height = width/60;
+                                R_slider.src = "https://user-images.githubusercontent.com/95542282/167899001-c45c4017-5d26-4940-90dd-16a83d81f7c5.png"
+                                R_slider.style.position = 'absolute';
+                                R_slider.style.left = width/1.25+"px";
+                                R_slider.style.top = height/1.5+"px";
+                                document.getElementById("RGB").appendChild(R_slider);
+                                ////////////////////////////////////////
+                                // console.log("///////////////////////////");
+                                // console.log("Width of R_Backing: "+width/10);
+                                R_slider.style.left = width/1.25+((width/10/255)*X)+"px";
+                                // console.log(R_slider.style.left);
+                                R = R_slider.style.left;
+                                R_display.innerHTML = X;
+                                R_display.style.color = "rgb("+String(X)+", 0, 0)";
+                                RGB.appendChild(R_display);
+                                R = parseInt(R.replace("px",""))+12;
+                                // console.log(R)
+                                RGB.appendChild(R_slider);
+                                // console.log("///////////////////////////");
+                                ///////////////////////////////////////
+                                //Functions
+                                R_backing.onmouseenter = () =>{
+                                    // console.log("Mousedown!");
+                                    R_movable = true;
+                                }
+                                R_backing.onmouseleave = () =>{
+                                    // console.log("Mouseup!");
+                                    R_movable = false
+                                }
+                                // console.log(width/10);
+                                R_movable = false
+                                // console.log("Color is: "+element.style.color);
+
+                                document.onmousemove = (event) =>{
+                                    if(R_movable == true){
+                                        // console.log("Yey");
+                                        X = ((event.clientX-(width/1.25))/(width/10)*257.5);
+                                        if(X>255){X=255};
+                                        if(X<0){X=0};
+                                        X = Math.round(X);
+                                        R_display.innerHTML = X;
+                                        R_slider.style.left = String(event.clientX)+"px";
+                                        R_display.style.color = "rgb("+String(X)+", 0, 0)"
+                                        document.getElementById("RGB").appendChild(R_slider);
+                                        if(ColorType == 0){
+                                            element.style.color = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                            element.c = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                        }else{
+                                            element.style.backgroundColor = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                            element.b = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                        }
+                                    }
+                                }
+                                //Green----------------------------------------------------------------------
+                                var B_backing = document.createElement("img")
+                                B_backing.src = "https://user-images.githubusercontent.com/95542282/167852656-d1d35ee7-ea5f-4ef6-9491-a838541c7f30.png"
+                                B_backing.style.position = 'absolute';
+                                B_backing.style.left = width/1.25+"px";
+                                B_backing.style.top = height/1.25+"px";
+                                B_backing.height = width/40;
+                                B_backing.width = width/10;
+
+                                B_display = document.createElement("h3");
+                                B_display.style.position = 'absolute';
+                                B_display.style.left = width/1.25+"px";
+                                B_display.style.top = height/1.35+"px";
+                                B_display.style.color = "red";
+                                B_display.innerHTML = 0;
+                                document.getElementById("RGB").appendChild(B_display);
+
+                                document.getElementById("RGB").appendChild(B_backing);
+
+                                var B_slider = document.createElement("img");
+                                B_slider.width = width/80;
+                                B_slider.height = width/60;
+                                B_slider.src = "https://user-images.githubusercontent.com/95542282/167899001-c45c4017-5d26-4940-90dd-16a83d81f7c5.png"
+                                B_slider.style.position = 'absolute';
+                                B_slider.style.left = width/1.25+"px";
+                                B_slider.style.top = height/1.25+"px";
+                                document.getElementById("RGB").appendChild(B_slider);
+
+
+                                B_slider.style.left = width/1.25+((width/10/255)*BX)+"px";
+                                B_display.innerHTML = BX;
+                                B_display.style.color = "rgb(0, "+String(BX)+", 0)";
+                                RGB.appendChild(B_display);
+                                RGB.appendChild(B_slider);
+
+
+                                 //Functions
+                                 var B_movable;
+                                B_backing.addEventListener("mouseenter", function(){
+                                    // console.log("Mousedown!");
+                                    B_movable = true;
+                                })
+                                // B_backing.onmouseenter = () =>{
+                                //     console.log("Mousedown!");
+                                //     B_movable = true;
+                                // }
+                                B_backing.addEventListener("mouseleave",function(){
+                                    // console.log("Mouseup!");
+                                    B_movable = false
+                                })
+                                // console.log(width/10);
+                                B_movable = false
+
+
+                                document.addEventListener("mousemove",function(event){
+                                    if(B_movable == true){
+                                        // console.log("Yey");
+                                        BX = ((event.clientX-(width/1.25))/(width/10)*257.5);
+                                        if(BX>255){BX=255};
+                                        if(BX<0){BX=0};
+                                        BX = Math.round(BX);
+                                        B_display.innerHTML = BX;
+                                        B_slider.style.left = String(event.clientX)+"px";
+                                        B_display.style.color = "rgb(0, "+String(BX)+", 0)";
+                                        document.getElementById("RGB").appendChild(B_slider);
+
+                                        if(ColorType == 0){
+                                            element.style.color = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                            element.c = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                        }else{
+                                            element.style.backgroundColor = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                            element.b = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                        }
+                                    }
+                                })
+
+
+
+                                // document.onmousemove = (event) =>{
+                                //     if(B_movable == true){
+                                //         console.log("Yey");
+                                //         BX = ((event.clientX-(width/1.25))/(width/10)*257.5);
+                                //         if(BX>255){BX=255};
+                                //         if(BX<0){BX=0};
+                                //         BX = Math.round(BX);
+                                //         B_display.innerHTML = BX;
+                                //         B_slider.style.left = String(event.clientX)+"px";
+                                //         B_display.style.color = "rgb("+String(BX)+", 0, 0)"
+                                //         document.getElementById("RGB").appendChild(B_slider);
+                                //     }
+                                // }
+
+
+                                //Blue:
+                                var G_backing = document.createElement("img")
+                                G_backing.src = "https://user-images.githubusercontent.com/95542282/167852656-d1d35ee7-ea5f-4ef6-9491-a838541c7f30.png"
+                                G_backing.style.position = 'absolute';
+                                G_backing.style.left = width/1.25+"px";
+                                G_backing.style.top = height/1.1+"px";
+                                G_backing.height = width/40;
+                                G_backing.width = width/10;
+
+                                G_display = document.createElement("h3");
+                                G_display.style.position = 'absolute';
+                                G_display.style.left = width/1.25+"px";
+                                G_display.style.top = height/1.2+"px";
+                                G_display.style.color = "red";
+                                G_display.innerHTML = 0;
+                                document.getElementById("RGB").appendChild(G_display);
+
+                                document.getElementById("RGB").appendChild(G_backing);
+
+                                var G_slider = document.createElement("img");
+                                G_slider.width = width/80;
+                                G_slider.height = width/60;
+                                G_slider.src = "https://user-images.githubusercontent.com/95542282/167899001-c45c4017-5d26-4940-90dd-16a83d81f7c5.png"
+                                G_slider.style.position = 'absolute';
+                                G_slider.style.left = width/1.25+"px";
+                                G_slider.style.top = height/1.1+"px";
+                                document.getElementById("RGB").appendChild(G_slider);
+                                 //Functions
+                                 var G_movable;
+                                G_backing.addEventListener("mouseenter", function(){
+                                    // console.log("Mousedown!");
+                                    G_movable = true;
+                                })
+
+                                // B_backing.onmouseenter = () =>{
+                                //     console.log("Mousedown!");
+                                //     B_movable = true;
+                                // }
+                                G_backing.addEventListener("mouseleave",function(){
+                                    // console.log("Mouseup!");
+                                    G_movable = false
+                                })
+                                // console.log(width/10);
+                                G_movable = false
+
+
+                                document.addEventListener("mousemove",function(event){
+                                    if(G_movable == true){
+                                        // console.log("Yey");
+                                        GX = ((event.clientX-(width/1.25))/(width/10)*257.5);
+                                        if(GX>255){GX=255};
+                                        if(GX<0){GX=0};
+                                        GX = Math.round(GX);
+                                        G_display.innerHTML = GX;
+                                        G_slider.style.left = String(event.clientX)+"px";
+                                        G_display.style.color = "rgb(0, 0, "+String(GX)+")";
+                                        document.getElementById("RGB").appendChild(G_slider);
+                                        if(ColorType == 0){
+                                            element.style.color = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                            element.c = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                        }else{
+                                            element.style.backgroundColor = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                            element.b = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                        }
+                                    }
+                                })
+                                //Transparency:
+
+                                var T_backing = document.createElement("img")
+                                T_backing.src = "https://user-images.githubusercontent.com/95542282/168328260-7930d3be-cec4-4f7f-93d0-71e08380c46f.png"
+                                T_backing.style.position = 'absolute';
+                                T_backing.style.left = width/1.5+"px";
+                                T_backing.style.top = height/1.5+"px";
+                                T_backing.width = width/40;
+                                T_backing.height = width/10;
+
+                                T_display = document.createElement("h3");
+                                T_display.style.position = 'absolute';
+                                T_display.style.left = width/1.48+"px";
+                                T_display.style.top = height/1.65+"px";
+                                T_display.style.color = "red";
+                                T_display.innerHTML = 1;
+                                document.getElementById("RGB").appendChild(T_display);
+
+                                document.getElementById("RGB").appendChild(T_backing);
+
+                                var T_slider = document.createElement("img");
+                                T_slider.width = width/80;
+                                T_slider.height = width/60;
+                                T_slider.src = "https://user-images.githubusercontent.com/95542282/167899001-c45c4017-5d26-4940-90dd-16a83d81f7c5.png"
+                                T_slider.style.position = 'absolute';
+                                T_slider.style.left = width/1.5+"px";
+                                T_slider.style.top = height/1.5+"px";
+                                document.getElementById("RGB").appendChild(T_slider);
+                                 //Functions
+                                
+                                T_slider.style.top = height/1.5/*The style.top for T_backing*/+(width/10)-((width/10)*(TX))+"px";
+                                console.log(height/1.5+(height/10)-((width/10)*TX))
+                                T_display.innerHTML = TX;
+                                T_display.style.color = "rgb(0, 0, "+String(TX)+")";
+                                RGB.appendChild(T_display);
+                                RGB.appendChild(T_slider);
+                                console.log(TX);
+
+                                        
+                                G_slider.style.left = width/1.25+((width/10/255)*GX)+"px";
+                                G_display.innerHTML = GX;
+                                G_display.style.color = "rgb(0, 0, "+String(GX)+")";
+                                RGB.appendChild(G_display);
+                                RGB.appendChild(G_slider);
+
+
+
+                                var T_movable;
+                                T_backing.addEventListener("mouseenter", function(){
+                                    // console.log("Mousedown!");
+                                    T_movable = true;
+                                })
+
+                                // B_backing.onmouseenter = () =>{
+                                //     console.log("Mousedown!");
+                                //     B_movable = true;
+                                // }
+                                T_backing.addEventListener("mouseleave",function(){
+                                    // console.log("Mouseup!");
+                                    T_movable = false
+                                })
+                                // console.log(width/10);
+                                T_movable = false
+                                document.addEventListener("mousemove",function(event){
+                                    if(T_movable == true){
+                                        // console.log("Yey");
+                                        TX = ((event.clientY-(height/1.1))/(height/10)/(-2.4)*1.2)-0.2;
+                                        // console.log("TX: "+TX);
+                                        if(TX>1){TX=1};
+                                        if(TX<0){TX=0};
+                                        TX = Math.round(TX*1000)/1000;
+                                        T_display.innerHTML = TX;
+                                        document.getElementById("RGB").appendChild(T_display);
+                                        T_slider.style.top = String(event.clientY)+"px";
+                                        // T_display.style.color = "rgb(0, 0, "+String(TX)+")";
+                                        document.getElementById("RGB").appendChild(T_slider);
+                                        if(ColorType == 0){
+                                            element.style.color = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                            element.c = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                        }else{
+                                            element.style.backgroundColor = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                            element.b = "rgba("+X+","+BX+","+GX+","+TX+")";
+                                        }
+                                        element.transparency = TX;
+                                    }
+                                })
+                                //closer:
+
+                                var close = document.createElement("img");
+                                close.src = "https://user-images.githubusercontent.com/95542282/168337209-1aa21d7b-48c3-4f33-82bb-d94af6f243e4.png";
+                                close.style.position = 'absolute';
+                                close.style.left = String(width/1.5)+"px";
+                                close.style.top = String(height/1.1)+"px";
+                                close.style.height = "50px";
+                                close.style.width = "50px";
+                                document.getElementById("RGB").appendChild(close);
+                                
+                                close.addEventListener("click", function(){
+                                    RGB = document.getElementById("RGB");
+                                    RGB.removeChild(B_display);
+                                    RGB.removeChild(R_display);
+                                    RGB.removeChild(G_display);
+                                    RGB.removeChild(T_display);
+
+                                    RGB.removeChild(R_backing);
+                                    RGB.removeChild(T_backing);
+                                    RGB.removeChild(B_backing);
+                                    RGB.removeChild(G_backing);
+
+                                    RGB.removeChild(R_slider);
+                                    //Test code to get the top style of T slider. 
+                                    // console.log("Top: "+T_slider.style.top);
+                                    RGB.removeChild(T_slider);
+                                    RGB.removeChild(G_slider);
+                                    RGB.removeChild(B_slider);
+
+                                    RGB.removeChild(close);
+                                    RGB.removeChild(RGBColorPicker);
+                                    RGB.removeChild(COBC);
+                                    ColorChange = false;
+                                    ChangingColors = false;
+                                    document.getElementById("ChangeColor").src = "https://user-images.githubusercontent.com/95542282/166713864-35bb3c99-6746-4755-8f36-913a24ec8ad0.png";
+                                })
+
+                                document.getElementById("Delete").addEventListener("click",function(){
+                                    RGB = document.getElementById("RGB");
+                                    RGB.removeChild(B_display);
+                                    RGB.removeChild(R_display);
+                                    RGB.removeChild(G_display);
+                                    RGB.removeChild(T_display);
+
+                                    RGB.removeChild(R_backing);
+                                    RGB.removeChild(T_backing);
+                                    RGB.removeChild(B_backing);
+                                    RGB.removeChild(G_backing);
+
+                                    RGB.removeChild(R_slider);
+                                    //Test code to get the top style of T slider. 
+                                    // console.log("Top: "+T_slider.style.top);
+                                    RGB.removeChild(T_slider);
+                                    RGB.removeChild(G_slider);
+                                    RGB.removeChild(B_slider);
+
+                                    RGB.removeChild(close);
+                                    RGB.removeChild(RGBColorPicker);
+                                    RGB.removeChild(COBC);
+                                    ColorChange = false;
+                                    ChangingColors = false;
+                                    document.getElementById("ChangeColor").src = "https://user-images.githubusercontent.com/95542282/166713864-35bb3c99-6746-4755-8f36-913a24ec8ad0.png";
+                                })
+
+                                document.getElementById("Resize").addEventListener("click",function(){
+                                    RGB = document.getElementById("RGB");
+                                    RGB.removeChild(B_display);
+                                    RGB.removeChild(R_display);
+                                    RGB.removeChild(G_display);
+                                    RGB.removeChild(T_display);
+
+                                    RGB.removeChild(R_backing);
+                                    RGB.removeChild(T_backing);
+                                    RGB.removeChild(B_backing);
+                                    RGB.removeChild(G_backing);
+
+                                    RGB.removeChild(R_slider);
+                                    //Test code to get the top style of T slider. 
+                                    // console.log("Top: "+T_slider.style.top);
+                                    RGB.removeChild(T_slider);
+                                    RGB.removeChild(G_slider);
+                                    RGB.removeChild(B_slider);
+
+                                    RGB.removeChild(close);
+                                    RGB.removeChild(RGBColorPicker);
+                                    RGB.removeChild(COBC);
+                                    ColorChange = false;
+                                    ChangingColors = false;
+                                    document.getElementById("ChangeColor").src = "https://user-images.githubusercontent.com/95542282/166713864-35bb3c99-6746-4755-8f36-913a24ec8ad0.png";
+                                })
+
+                                // console.log(close);
+                                console.log("Did stuff");
+                            }
+                        }else{
+                            var RSChunk = document.getElementById("ResizeChunk");
+                            if(ResizeOn == true){
+                                ResizeOn = false;
+                                Resizer.src = "https://user-images.githubusercontent.com/95542282/170051978-eefbfcf8-8a22-4f99-b889-b4660f9c1653.png";
+                                console.log(element.type);
+                                if(element.type == "img"){
+                                    //Is img
+                                    /*
+                                    https://user-images.githubusercontent.com/95542282/170106374-d9e210ea-9f45-40c4-b26c-d7a7c028289b.png)
+                                    ![H_Arrow](https://user-images.githubusercontent.com/95542282/170106416-a07020a5-e76d-4899-962b-a08b49b6f201.png
+                                    */
+                                    var Props = document.createElement("h3");
+                                    Props.style.position = 'absolute';
+                                    Props.innerHTML = "Properties: ";
+                                    Props.style.top = height/1.6+"px";
+                                    Props.style.left = width/1.4+"px";
+                                    RSChunk.appendChild(Props);
+
+                                    console.log("Height of img: "+element.style.height+" width of image: "+element.style.width);
+                                    var H_Scaler = document.createElement("h3");
+                                    H_Scaler.style.position = 'absolute';
+                                    H_Scaler.innerHTML = "Height: "+element.h;
+                                    H_Scaler.style.top = height/1.5+"px";
+                                    H_Scaler.style.left = width/1.4+"px";
+                                    H_Scaler.addEventListener("click", function(){
+                                        var setH = prompt("Enter new height! (Just enter a number)");
+                                        element.style.height = setH+"px";
+                                        H_Scaler.innerHTML = "Height: "+setH+"px";
+                                        H_Arrow.style.top = String(element.yPos-parseInt(H_Arrow.style.height.replace("px", ""))/2 +(parseInt(element.style.height)))+"px";
+                                        Area.innerHTML = "Surface area: "+parseInt(element.style.width)*parseInt(element.style.height)+"px";
+                                    })
+                                    RSChunk.appendChild(H_Scaler);
+
+                                    var W_Scaler = document.createElement("h3");
+                                    W_Scaler.style.position = 'absolute';
+                                    W_Scaler.innerHTML = "Width: "+element.w;
+                                    W_Scaler.style.top = height/1.4+"px";
+                                    W_Scaler.style.left = width/1.4+"px";
+                                    W_Scaler.addEventListener("click", function(){
+                                        var setW = prompt("Enter new width! (Just enter a number)");
+                                        element.style.width = setW+"px";
+                                        W_Scaler.innerHTML = "Width: "+setW+"px";
+                                        W_Arrow.style.left = String(element.xPos-parseInt(W_Arrow.style.width.replace("px", ""))/2 +(parseInt(element.style.width)))+"px";
+                                        Area.innerHTML = "Surface area: "+parseInt(element.style.width)*parseInt(element.style.height)+"px";
+                                    })
+                                    RSChunk.appendChild(W_Scaler);
+
+                                    var Area = document.createElement("h3");
+                                    Area.innerHTML = "Surface area: "+parseInt(element.style.width)*parseInt(element.style.height)+"px";
+                                    Area.style.position = "absolute";
+                                    Area.style.top = height/1.3+"px";
+                                    Area.style.left = width/1.4+"px";
+                                    RSChunk.appendChild(Area);
+
+                                    var H_Arrow = document.createElement("img");
+                                    H_Arrow.src = "https://user-images.githubusercontent.com/95542282/170106416-a07020a5-e76d-4899-962b-a08b49b6f201.png";
+                                    H_Arrow.style.width = "15px";
+                                    H_Arrow.style.height = "30px";
+                                    H_Arrow.style.position = 'absolute';
+                                    H_Arrow.style.left = String(element.xPos+(parseInt(element.style.height.replace("px",""))/2/**/))+"px";
+                                    H_Arrow.style.top = String(element.yPos-parseInt(H_Arrow.style.height.replace("px", ""))/2 +(parseInt(element.style.height)))+"px";
+                                    var H_Movable = false
+                                    H_Arrow.addEventListener("mouseenter", function(){
+                                        H_Movable = true;
+                                    })
+                                    H_Arrow.addEventListener("mouseleave",function(){
+                                        H_Movable = false;
+                                    })
+                                    
+                                    RSChunk.appendChild(H_Arrow);
+                                    console.log("Arrow: "+H_Arrow.style.left);
+
+                                    var W_Arrow = document.createElement("img");
+                                    W_Arrow.src = "https://user-images.githubusercontent.com/95542282/170106374-d9e210ea-9f45-40c4-b26c-d7a7c028289b.png";
+                                    W_Arrow.style.width = "30px";
+                                    W_Arrow.style.height = "15px";
+                                    W_Arrow.style.position = 'absolute';
+                                    W_Arrow.style.left = String(element.xPos-parseInt(W_Arrow.style.width.replace("px",""))/2 +(parseInt(element.style.width)))+"px";
+                                    W_Arrow.style.top = String(element.yPos+parseInt(element.style.height.replace("px",""))/2)+"px";
+                                    RSChunk.appendChild(W_Arrow);
+                                    var W_Movable = false;
+                                    W_Arrow.addEventListener("mouseenter", function(){
+                                        W_Movable = true;
+                                    })
+                                    W_Arrow.addEventListener("mouseleave",function(){
+                                        W_Movable = false;
+                                    })
+                                    var LastWPos;
+                                    var LastHPos
+                                    document.addEventListener("mousemove",function(event){
+                                        if(H_Movable == true){
+                                            H_Arrow.style.top = String(event.clientY-parseInt(H_Arrow.style.height)/2)+"px";
+                                            RSChunk.appendChild(H_Arrow);
+                                            Area.innerHTML = "Surface area: "+parseInt(element.style.width)*parseInt(element.style.height)+"px";
+                                            if(LastHPos>parseInt(H_Arrow.style.left)){
+                                                // console.log("decreasing!");
+                                                element.style.height = parseInt(element.style.height) + (parseInt(H_Arrow.style.top)-LastHPos)+"px";
+                                                Workspace.appendChild(element);
+                                                // H_Arrow.style.left = String(element.xPos+(parseInt(element.style.height.replace("px",""))/2/**/))+"px";
+                                                H_Arrow.style.top = String(element.yPos-parseInt(H_Arrow.style.height.replace("px", ""))/2 +(parseInt(element.style.height)))+"px";
+                                                // console.log(element.style.width+"hi");
+                                                // console.log(parseInt(W_Arrow.style.left)-LastWPos);
+                                            }else{
+                                                // console.log("Increasing!");
+                                                element.style.height = parseInt(element.style.height) + (parseInt(H_Arrow.style.top)-LastHPos)+"px";
+                                                Workspace.appendChild(element);
+                                                // H_Arrow.style.left = String(element.xPos+(parseInt(element.style.height.replace("px",""))/2/**/))+"px";
+                                                H_Arrow.style.top = String(element.yPos-parseInt(H_Arrow.style.height.replace("px", ""))/2 +(parseInt(element.style.height)))+"px";
+                                                H_Scaler.innerHTML = "Height: "+element.style.height;
+                                                // console.log(element.style.width+"hi");
+                                                // console.log(parseInt(W_Arrow.style.left)-LastWPos);
+                                            }
+                                            LastHPos = parseInt(H_Arrow.style.top);
+                                        }
+                                        
+                                        if(W_Movable == true){
+                                            W_Arrow.style.left = String(event.clientX-parseInt(W_Arrow.style.width)/2)+"px";
+                                            // console.log(LastWPos+"Hi"+W_Arrow.style.left);
+                                            Area.innerHTML = "Surface area: "+parseInt(element.style.width)*parseInt(element.style.height)+"px";
+                                            if(LastWPos>parseInt(W_Arrow.style.left)){
+                                                // console.log("decreasing!");
+                                                element.style.width = parseInt(element.style.width) + (parseInt(W_Arrow.style.left)-LastWPos)+"px";
+                                                Workspace.appendChild(element);
+                                                // console.log(element.style.width+"hi");
+                                                // console.log(parseInt(W_Arrow.style.left)-LastWPos);
+                                            }else{
+                                                // console.log("Increasing!");
+                                                element.style.width = parseInt(element.style.width) + (parseInt(W_Arrow.style.left)-LastWPos)+"px";
+                                                Workspace.appendChild(element);
+                                                // console.log(element.style.width+"hi");
+                                                // console.log(parseInt(W_Arrow.style.left)-LastWPos);
+
+                                                W_Arrow.style.left = String(element.xPos-parseInt(W_Arrow.style.width.replace("px", ""))/2 +(parseInt(element.style.width)))+"px";
+                                                W_Scaler.innerHTML = "Width: "+element.style.width;
+                                            }
+                                            LastWPos = parseInt(W_Arrow.style.left);
+                                            // element.style.width = parseInt(element.style.width)+(parseInt(element.style.left)-parseInt(W_Arrow.style.left))+"px";
+                                            // RSChunk.appendChild(element);
+
+                                        }
+                                    })
+                                    var CloseSize = document.createElement("img");
+                                    CloseSize.src = "https://user-images.githubusercontent.com/95542282/168337209-1aa21d7b-48c3-4f33-82bb-d94af6f243e4.png";
+                                    CloseSize.style.position = 'absolute';
+                                    CloseSize.style.left = width/1.15+"px";
+                                    CloseSize.style.top = height/1.4+"px";
+                                    CloseSize.style.width = width/10+"px";
+                                    CloseSize.style.height = width/10+"px";
+                                    CloseSize.addEventListener("click", function(){
+                                        RSChunk.removeChild(W_Scaler);
+                                        RSChunk.removeChild(H_Scaler);
+                                        RSChunk.removeChild(W_Arrow);
+                                        RSChunk.removeChild(H_Arrow);
+                                        RSChunk.removeChild(Area);
+                                        RSChunk.removeChild(Props);
+                                        RSChunk.removeChild(CloseSize)
+                                    })
+                                    RSChunk.appendChild(CloseSize);
+                                }else{
+                                    //Element.type is not an image:
+                                    // console.log(element.style.fontSize);
+                                    // element.style.fontSize = "50%";
+                                    console.log(element.style.fontSize);
+                                    console.log(window.getComputedStyle(element).getPropertyValue("font-size"));
+                                    // window.getComputedStyle(element).getPropertyValue("font-size") = "50px";
+                                    // var style = window.getComputedStyle(element).getPropertyValue("font-size");
+                                    // var fontSize = parseFloat(style);
+                                    // element.style.fontSize = (fontSize + 1)+"px";
+                                    var UpScale = document.createElement("img");
+                                    UpScale.src = "https://user-images.githubusercontent.com/95542282/173089218-a00ca0db-4250-4e6f-8cc6-4bc5d5e0a145.png";
+                                    UpScale.style.position = "absolute";
+                                    UpScale.style.left = width/1.25+"px";
+                                    UpScale.style.top = height/1.5+"px";
+                                    UpScale.style.height = height/10+"px";
+                                    UpScale.style.widows = width/10+"px";
+                                    RSChunk.appendChild(UpScale);
+
+                                    var DownScale = document.createElement("img");
+                                    DownScale.src = "https://user-images.githubusercontent.com/95542282/173090280-b632c982-280f-4cf4-bcab-8cf555634341.png";
+                                    DownScale.style.position = "absolute";
+                                    DownScale.style.left = width/1.25+"px";
+                                    DownScale.style.top = height/1.25+"px";
+                                    DownScale.style.height = height/10+"px";
+                                    DownScale.style.widows = width/10+"px";
+                                    RSChunk.appendChild(DownScale);
+
+                                    var CurrentSize = document.createElement("h3");
+                                    CurrentSize.style.position = "absolute";
+                                    CurrentSize.style.left = width/1.3+"px";
+                                    CurrentSize.style.top = height/1.6+"px";
+                                    CurrentSize.innerHTML = "Current Size: "+window.getComputedStyle(element).getPropertyValue("font-size");
+                                    RSChunk.appendChild(CurrentSize);
+
+                                    UpScale.addEventListener("click", function(){
+                                        var style = window.getComputedStyle(element).getPropertyValue("font-size");
+                                        var fontSize = parseFloat(style);
+                                        element.style.fontSize = (fontSize + 1)+"px";
+                                        CurrentSize.innerHTML = "Current Size: "+window.getComputedStyle(element).getPropertyValue("font-size");
+                                    })
+
+                                    DownScale.addEventListener("click", function(){
+                                        var style = window.getComputedStyle(element).getPropertyValue("font-size");
+                                        var fontSize = parseFloat(style);
+                                        element.style.fontSize = (fontSize - 1)+"px";
+                                        CurrentSize.innerHTML = "Current Size: "+window.getComputedStyle(element).getPropertyValue("font-size");
+                                    })
+
+                                    var CloseTextRS = document.createElement("img");
+                                    CloseTextRS.src = "https://user-images.githubusercontent.com/95542282/168337209-1aa21d7b-48c3-4f33-82bb-d94af6f243e4.png";
+                                    CloseTextRS.style.position = 'absolute';
+                                    CloseTextRS.style.left = width/1.15+"px";
+                                    CloseTextRS.style.top = height/1.4+"px";
+                                    CloseTextRS.style.width = width/10+"px";
+                                    CloseTextRS.style.height = width/10+"px";
+                                    CloseTextRS.addEventListener("click", function(){
+                                        RSChunk.removeChild(DownScale);
+                                        RSChunk.removeChild(UpScale);
+                                        RSChunk.removeChild(CloseTextRS);
+                                        RSChunk.removeChild(CurrentSize);
+                                    })
+                                    RSChunk.appendChild(CloseTextRS);
+                                }
+                            }else{
+                                if(MoveOn == true){
+                                    if(element.type != "img"){
+                                        console.log("Not img");
+                                        console.log(window.getComputedStyle(element).getPropertyValue("width"));
+                                        element.style.width = (window.getComputedStyle(element).getPropertyValue("width"));
+                                        element.style.height = (window.getComputedStyle(element).getPropertyValue("height"));
+                                    }
+                                    
+                                    var WMove = document.createElement("img");
+                                    WMove.src = "https://user-images.githubusercontent.com/95542282/173127339-bc01ffc7-ff54-4365-b851-df91da6412b7.png";
+                                    WMove.style.position = "absolute";
+                                    WMove.style.top = (parseInt(element.style.top) + parseInt(element.style.height)/2)-(parseInt(element.style.height)*2.5/2)+"px";
+                                    WMove.style.left = (parseInt(element.style.left) + parseInt(element.style.width)/2)-(parseInt(element.style.width)/10)+"px";
+                                    WMove.style.height = parseInt(element.style.height)*2.5+"px";
+                                    WMove.style.width = parseInt(element.style.width)/5+"px";
+                                    RSChunk.appendChild(WMove);
+
+                                    var HMove = document.createElement("img");
+                                    HMove.src = "https://user-images.githubusercontent.com/95542282/173360898-2612b5a6-33b3-43da-97ae-9de68fe72bd2.png";
+                                    HMove.style.position = "absolute";
+                                    HMove.style.left = (parseInt(element.style.left) + parseInt(element.style.width)/2)-(parseInt(element.style.width)*2.5/2)+"px";
+                                    HMove.style.top = (parseInt(element.style.top) + parseInt(element.style.height)/2)-(parseInt(element.style.height)/10)+"px";
+                                    HMove.style.width = parseInt(element.style.width)*2.5+"px";
+                                    HMove.style.height = parseInt(element.style.height)/5+"px";
+                                    RSChunk.appendChild(HMove);
+                                    var ChangeX;
+                                    var ChangeY;
+                                    var WMover = false;
+                                    var HMover = false;
+                                    WMove.addEventListener("mouseover",function(){
+                                        WMover = true;
+                                    })
+                                    WMove.addEventListener("mouseleave",function(){
+                                        WMover = false;
+                                        var StartedX = false;
+                                        var StartedY = false;
+                                        Meow = false;
+                                    })
+                                    HMove.addEventListener("mouseover",function(){
+                                        HMover = true;
+                                    })
+                                    HMove.addEventListener("mouseleave",function(){
+                                        HMover = false;
+                                        var StartedX = false;
+                                        var StartedY = false;
+                                        Meow = 0;
+                                    })
+                                    var LastH = parseInt(element.style.left);
+                                    var LastW = parseInt(element.style.top);
+                                    var StartedX = false;
+                                    var StartedY = false;
+                                    var StartY;
+                                    var Meow = 0;
+                                    document.addEventListener("mousemove",function(carl){
+                                        if(StartedX == false){
+                                            StartedX = true;
+                                            ChangeX = 0;
+                                        }else{
+                                            if(HMover == true){
+                                                if(carl.clientX > LastH){
+                                                    console.log("Move right!");
+                                                    // console.log(LastH);
+                                                    // element.style.left = parseInt(element.style.left)+lastH+"px";
+                                                    element.style.left = parseInt(element.style.left)+ChangeX+"px";
+                                                    WMove.style.left = (parseInt(element.style.left) + parseInt(element.style.width)/2)-(parseInt(element.style.width)/10)+"px";
+                                                    HMove.style.left = (parseInt(element.style.left) + parseInt(element.style.width)/2)-(parseInt(element.style.width)*2.5/2)+"px";
+                                                    HMove.style.top = (parseInt(element.style.top) + parseInt(element.style.height)/2)-(parseInt(element.style.height)/10)+"px";
+                                                }else{
+                                                    console.log("Move left!");
+                                                    // element.style.left = parseInt(element.style.left)-lastH+"px";
+                                                    element.style.left = parseInt(element.style.left)+ChangeX+"px";
+                                                    WMove.style.top = (LastW-(parseInt(WMove.style.height)/2)+parseInt(element.style.height)/2)+"px";
+                                                    WMove.style.left = (parseInt(element.style.left) + parseInt(element.style.width)/2)-(parseInt(element.style.width)/10)+"px";
+                                                    HMove.style.left = (parseInt(element.style.left) + parseInt(element.style.width)/2)-(parseInt(element.style.width)*2.5/2)+"px";
+                                                    HMove.style.top = (parseInt(element.style.top) + parseInt(element.style.height)/2)-(parseInt(element.style.height)/10)+"px";
+                                                }
+                                            }
+                                            ChangeX = carl.clientX - LastH;
+                                            // console.log(ChangeX)
+                                            LastH = carl.clientX;
+                                            
+                                        }
+                                        if(StartedY == false){
+                                            StartedY = true;
+                                            LastWPos = carl.clientY;
+                                            // ChangeY = 0;
+                                            // LastW = carl.clientY;
+                                        }else{
+                                            if(WMover == true){
+                                                StartY = carl.clientY;
+                                                // console.log("Higgers! "+(StartY - LastW));
+                                                if(carl.clientY > LastW){
+                                                    console.log("Move down!");
+                                                    // console.log(LastW);
+                                                    element.style.top = carl.clientY+"px";
+                                                    console.log(carl.clientY - Meow+"px");
+                                                    // WMove.style.top = (LastW-parseInt(WMove.style.height)/2)+"px";
+                                                    WMove.style.top = (LastW-(parseInt(WMove.style.height)/2)+parseInt(element.style.height)/2)+"px";
+                                                    HMove.style.left = (parseInt(element.style.left) + parseInt(element.style.width)/2)-(parseInt(element.style.width)*2.5/2)+"px";
+                                                    HMove.style.top = (parseInt(element.style.top) + parseInt(element.style.height)/2)-(parseInt(element.style.height)/10)+"px";
+                                                }else{
+                                                    console.log("Move up!");
+                                                    element.style.top = carl.clientY+"px";
+                                                    WMove.style.top = (LastW-(parseInt(WMove.style.height)/2)+parseInt(element.style.height)/2)+"px";
+                                                    HMove.style.left = (parseInt(element.style.left) + parseInt(element.style.width)/2)-(parseInt(element.style.width)*2.5/2)+"px";
+                                                    HMove.style.top = (parseInt(element.style.top) + parseInt(element.style.height)/2)-(parseInt(element.style.height)/10)+"px";
+                                                }
+                                                ChangeY = carl.clientY - LastW;
+                                                console.log(ChangeY)
+                                                LastW = carl.clientY;
+                                                if(Meow == 0){
+                                                    Meow = ChangeY;
+                                                    console.log("Meow: "+Meow);
+                                                }
+                                            }
+                                            
+                                        }
+                                    })
+                                    var CloseMove = document.createElement("img");
+                                    CloseMove.src = "https://user-images.githubusercontent.com/95542282/168337209-1aa21d7b-48c3-4f33-82bb-d94af6f243e4.png";
+                                    CloseMove.style.position = 'absolute';
+                                    CloseMove.style.left = width/1.15+"px";
+                                    CloseMove.style.top = height/1.4+"px";
+                                    CloseMove.style.width = width/10+"px";
+                                    CloseMove.style.height = width/10+"px";
+                                    CloseMove.addEventListener("click", function(){
+                                        RSChunk.removeChild(HMove);
+                                        RSChunk.removeChild(WMove);
+                                        RSChunk.removeChild(CloseMove);
+                                        MoveOn = false;
+                                        Mover.src = "https://user-images.githubusercontent.com/95542282/173124238-90aea306-a7e5-4c4c-971c-39ce03bfc49e.png";
+                                        element.xPos = parseInt(element.style.left);
+                                        element.yPos = parseInt(element.style.top);
+                                    })
+                                    RSChunk.appendChild(CloseMove);
+
+                                }else{
+                                    if(CTO == true){
+                                        CTO = false;
+                                        element.innerHTML = prompt("Eneter new text!");
+                                        document.getElementById("Text").src = "https://user-images.githubusercontent.com/95542282/176516224-021cc8a3-f16d-495c-98e8-29dd334c00b2.png";
+                                    }
+                                }
+                            }
+                        }
+                    }
+                }
+                elements.push(element);
+                console.log("Element created!");
+                console.log(SelectedElement);
+                console.log(elements);
+            }
+        }
+    }
+    
+    // Just for testing, delete later. 
+    function mousemove(event){
+    // console.log("pageX: ",event.pageX, 
+    // "pageY: ", event.pageY, 
+    // "clientX: ", event.clientX, 
+    // "clientY:", event.clientY)
+    }
+    var PhotoOn = false;
+    window.addEventListener('click', mousemove);
+    function Enter(){
+        // console.log("Entered!");
+        Placeable = false;
+    }
+    function Exit(){
+        // console.log("Cya!");
+        Placeable = true;
+    }
+    var SelectedElement = "";
+    function Xh1(){
+        console.log("This better work ");
+        SelectedElement = "h1";
+    }
+    function Xh2(){
+        SelectedElement = "h2";
+    }
+    function Xh3(){
+        SelectedElement = "h3";
+    }
+    function Xh4(){
+        SelectedElement = "h4";
+    }
+    function Xh5(){
+        SelectedElement = "h5";
+    }
+    function Xh6(){
+        SelectedElement = "h6";
+    }
+    function Xp(){
+        SelectedElement = "p";
+    }
+    function X1(){
+        SelectedElement = "a";
+    }
+    function Delete(){
+        SelectedElement = "";
+        if(ChangingColors == true){
+            CloseColor();
+        }
+        ColorChange = false;
+        ChangingColors = false;
+        document.getElementById("ChangeColor").src = "https://user-images.githubusercontent.com/95542282/166713864-35bb3c99-6746-4755-8f36-913a24ec8ad0.png";
+        if(Deleting == false){
+            MoveOn = false;
+            Mover.src = "https://user-images.githubusercontent.com/95542282/173124238-90aea306-a7e5-4c4c-971c-39ce03bfc49e.png";
+            Deleting = true;
+            PhotoOn = false;
+            ResizeOn = false;
+            Resizer.src = "https://user-images.githubusercontent.com/95542282/170051978-eefbfcf8-8a22-4f99-b889-b4660f9c1653.png";
+            Photowo.src = "https://user-images.githubusercontent.com/95542282/166702644-64249568-41de-4673-a6d2-9f00096dc33c.png";
+            SelectedElement = "";
+            document.getElementById("Delete").src = "https://user-images.githubusercontent.com/95542282/166706028-0f3c0c48-88fd-4b37-bad0-060939a349d7.png"
+        }else{
+            Deleting = false;
+            document.getElementById("Delete").src="https://user-images.githubusercontent.com/95542282/166702146-cd04cd4b-724b-4897-99d6-6cdd5c6b8ce4.png"
+        } 
+    }
+    function ChangeColors(){
+        SelectedElement = "";
+        Deleting = false;
+        document.getElementById("Delete").src="https://user-images.githubusercontent.com/95542282/166702146-cd04cd4b-724b-4897-99d6-6cdd5c6b8ce4.png"
+        if(ColorChange == true){
+            MoveOn = false;
+            Mover.src = "https://user-images.githubusercontent.com/95542282/173124238-90aea306-a7e5-4c4c-971c-39ce03bfc49e.png";
+            ColorChange = false;
+            ChangingColors = false;
+            Deleting = false;
+            PhotoOn = false;
+            ResizeOn = false;
+            Resizer.src = "https://user-images.githubusercontent.com/95542282/170051978-eefbfcf8-8a22-4f99-b889-b4660f9c1653.png";
+            Photowo.src = "https://user-images.githubusercontent.com/95542282/166702644-64249568-41de-4673-a6d2-9f00096dc33c.png";
+            document.getElementById("ChangeColor").src = "https://user-images.githubusercontent.com/95542282/166713864-35bb3c99-6746-4755-8f36-913a24ec8ad0.png";
+            PhotoOn = false;
+            Photowo.src = "https://user-images.githubusercontent.com/95542282/166702644-64249568-41de-4673-a6d2-9f00096dc33c.png";
+        }else{
+            MoveOn = false;
+            Mover.src = "https://user-images.githubusercontent.com/95542282/173124238-90aea306-a7e5-4c4c-971c-39ce03bfc49e.png";
+            ColorChange = true;
+            Deleting = false;
+            PhotoOn = false;
+            ResizeOn = false;
+            Resizer.src = "https://user-images.githubusercontent.com/95542282/170051978-eefbfcf8-8a22-4f99-b889-b4660f9c1653.png";
+            Photowo.src = "https://user-images.githubusercontent.com/95542282/166702644-64249568-41de-4673-a6d2-9f00096dc33c.png";
+            document.getElementById("ChangeColor").src = "https://user-images.githubusercontent.com/95542282/166715501-da99cbbe-7025-4ecc-b0ed-5adb2b3bf5b2.png"
+        }
+    }
+    var Photowo = document.getElementById("Photowo")
+    function Photo(){
+        console.log("Photo!");
+        if(PhotoOn == false){
+            MoveOn = false;
+            Mover.src = "https://user-images.githubusercontent.com/95542282/173124238-90aea306-a7e5-4c4c-971c-39ce03bfc49e.png";
+            PhotoOn = true;
+            SelectedElement = "img";
+            Deleting = false;
+            ResizeOn = false;
+            Resizer.src = "https://user-images.githubusercontent.com/95542282/170051978-eefbfcf8-8a22-4f99-b889-b4660f9c1653.png";
+            document.getElementById("Delete").src="https://user-images.githubusercontent.com/95542282/166702146-cd04cd4b-724b-4897-99d6-6cdd5c6b8ce4.png"
+            Photowo.src = "https://user-images.githubusercontent.com/95542282/169856616-686e6f19-b14c-4478-abb2-74013fd8228c.png";
+        }else{
+            PhotoOn = false;
+            Photowo.src = "https://user-images.githubusercontent.com/95542282/166702644-64249568-41de-4673-a6d2-9f00096dc33c.png";
+            SelectedElement = "";
+        }
+    }
+    var ResizeOn = false;
+    var Resizer = document.getElementById("Resize");
+    function Resize(){
+        console.log("resize!");
+        if(ResizeOn == false){
+            MoveOn = false;
+            Mover.src = "https://user-images.githubusercontent.com/95542282/173124238-90aea306-a7e5-4c4c-971c-39ce03bfc49e.png";
+            SelectedElement = "";
+            ResizeOn = true;
+            Deleting = false;
+            PhotoOn = false;
+            Photowo.src = "https://user-images.githubusercontent.com/95542282/166702644-64249568-41de-4673-a6d2-9f00096dc33c.png";
+            document.getElementById("Delete").src="https://user-images.githubusercontent.com/95542282/166702146-cd04cd4b-724b-4897-99d6-6cdd5c6b8ce4.png"
+            Resizer.src = "https://user-images.githubusercontent.com/95542282/170058301-a2f7edf9-1f89-460d-b623-ce289a0e9db7.png";
+
+        }else{
+            ResizeOn = false;
+            Resizer.src = "https://user-images.githubusercontent.com/95542282/170051978-eefbfcf8-8a22-4f99-b889-b4660f9c1653.png";
+        }
+    }
+    var MoveOn = false;
+    var Mover = document.getElementById("Mover");
+    function Move(){
+        console.log("Moving!");
+        if(MoveOn == false){
+            MoveOn = true;
+            SelectedElement = "";
+            Mover.src = "https://user-images.githubusercontent.com/95542282/173123692-b6328398-8b29-4bf3-b1b8-58bf6f9501da.png";
+            ResizeOn = false;
+            Deleting = false;
+            PhotoOn = false;
+            Photowo.src = "https://user-images.githubusercontent.com/95542282/166702644-64249568-41de-4673-a6d2-9f00096dc33c.png";
+            document.getElementById("Delete").src="https://user-images.githubusercontent.com/95542282/166702146-cd04cd4b-724b-4897-99d6-6cdd5c6b8ce4.png"
+            Resizer.src = "https://user-images.githubusercontent.com/95542282/170051978-eefbfcf8-8a22-4f99-b889-b4660f9c1653.png";
+        }else{
+            MoveOn = false;
+            Mover.src = "https://user-images.githubusercontent.com/95542282/173124238-90aea306-a7e5-4c4c-971c-39ce03bfc49e.png";
+        }
+    }
+    var XQXQXQ = document.createElement("br");
+    function GetHTML(){
+        SelectedElement = "";
+        console.log("Getting HTML!");
+        var HTMLGrabber = document.createElement("textarea");
+        // HTMLGrabber.innerHTML = elements[0].xPos;
+        Workspace.appendChild(HTMLGrabber);
+        HTMLGrabber.innerHTML = "<!DOCTYPE html>                                                                                                                                                                                                                                                                                                                            ";
+        HTMLGrabber.style.width = width/1.5+"px";
+        HTMLGrabber.style.height = height/2+"px";
+        console.log(window.innerWidth);
+        for(i = 0; i < elements.length; i ++){
+            console.log("Element id: "+ elements[i].id)
+            if(elements[i].D == true){
+                console.log(elements[i].id + "is bad cringe")
+            }else{
+                console.log(window.getComputedStyle(Workspace).getPropertyValue("width"));
+                console.log(elements[i].c);
+                elements[i].beforeWidth = elements[i].style.width;
+                elements[i].beforeLeft = elements[i].style.left;
+                elements[i].beforeTop = elements[i].style.top;
+                elements[i].beforeHeight = elements[i].style.height;
+                elements[i].style.width = parseInt(elements[i].style.width)/width*100*1.5+"%";
+                elements[i].style.left = parseInt(elements[i].style.left)/width*100*1.5+"%";
+                elements[i].style.height = parseInt(elements[i].style.height)/height*100*1.5+"%";
+                elements[i].style.top = parseInt(elements[i].style.top)/height*100*1.5+"%";
+                elements[i].beforeSize = elements[i].style.fontSize;
+                elements[i].style.fontSize = "150%";
+                // elements[i].style.width = "50%"
+                // var percentage = ( screenWidth - pixels ) / screenWidth ;
+                if(elements[i].type != "img"){
+                    HTMLGrabber.innerHTML = HTMLGrabber.innerHTML + '<'+elements[i].type+' style="color: '+elements[i].c+'; position: absolute; left: '+elements[i].style.left+'; top: '+elements[i].style.top+'; background-color: '+elements[i].b+'; font-size: '+window.getComputedStyle(elements[i]).getPropertyValue("font-size")+';">'+elements[i].innerHTML+'</'+elements[i].type+'>                                                                 ';
+                }else{
+                    console.log("There is an image!")
+                    //<img src="https://d377xzlc9w42ru.cloudfront.net/403.32fc953877939c3d.svg" style="width: 281px; height: 178px; position: absolute; left: 316px; top: 215px;">
+                    HTMLGrabber.innerHTML = HTMLGrabber.innerHTML + '<img src="'+elements[i].src+'" style="width: '+elements[i].style.width+'; height: '+elements[i].style.height+'; position: absolute; left: '+elements[i].style.left+'; top: '+elements[i].style.top+';">                                                                                                                                                                                                                                                ';
+                }
+            }
+        }
+        HTMLGrabber.style.fontSize = "10px";
+        var CloseMove = document.createElement("img");
+        CloseMove.src = "https://user-images.githubusercontent.com/95542282/168337209-1aa21d7b-48c3-4f33-82bb-d94af6f243e4.png";
+        CloseMove.style.position = 'absolute';
+        CloseMove.style.left = width/1.15+"px";
+        CloseMove.style.top = height/1.4+"px";
+        CloseMove.style.width = width/10+"px";Workspace.a
+        CloseMove.style.height = width/10+"px";
+        CloseMove.addEventListener("click", function(){
+            Workspace.removeChild(HTMLGrabber);
+            Workspace.removeChild(CloseMove);
+            for(i = 0; i < elements.length; i ++){
+                elements[i].style.width = elements[i].beforeWidth;
+                elements[i].style.left = elements[i].beforeLeft;
+                elements[i].style.height = elements[i].beforeHeight;
+                elements[i].style.top = elements[i].beforeTop;
+                elements[i].style.fontSize = elements[i].beforeSize;
+            }
+        })
+        Workspace.appendChild(CloseMove);
+        //<h2 id="0" style="color: rgba(243, 88, 133, 0.675); position: absolute; left: 659px; top: 239px; background-color: rgba(118, 0, 0, 0.23); font-size: 37px; width: 30.8625px; height: 42.4px;">hi</h2>
+    }
+    var CTO = false;
+    function ChangeText(){
+        if(CTO == false){
+            document.getElementById("Text").src = "https://user-images.githubusercontent.com/95542282/176516207-a0b4ca9e-bc24-4d18-8a3a-026b1e78304a.png";
+            CTO = true;
+
+            ResizeOn = false;
+            Deleting = false;
+            PhotoOn = false;
+            Photowo.src = "https://user-images.githubusercontent.com/95542282/166702644-64249568-41de-4673-a6d2-9f00096dc33c.png";
+            document.getElementById("Delete").src="https://user-images.githubusercontent.com/95542282/166702146-cd04cd4b-724b-4897-99d6-6cdd5c6b8ce4.png"
+            Resizer.src = "https://user-images.githubusercontent.com/95542282/170051978-eefbfcf8-8a22-4f99-b889-b4660f9c1653.png";
+            MoveOn = false;
+            Mover.src = "https://user-images.githubusercontent.com/95542282/173124238-90aea306-a7e5-4c4c-971c-39ce03bfc49e.png";
+        }else{
+            CTO = false;
+            document.getElementById("Text").src = "https://user-images.githubusercontent.com/95542282/176516224-021cc8a3-f16d-495c-98e8-29dd334c00b2.png";
+        }
+    }
+</script>
+<!-- https://d377xzlc9w42ru.cloudfront.net/403.32fc953877939c3d.svg -->
+<!-- https://pixabay.com/get/gb41f0e4c3001746eec714de54d932708dd6ad255d2a63cc36c815c75e09deca1bf5cc30af42b940631d85b8b1d62fa5f0ea8537bcfaf0cbf0e6956b8d8ed5c00_640.jpg -->
